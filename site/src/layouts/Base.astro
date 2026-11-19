@@ -1,23 +1,33 @@
 ---
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { school, whatsappLink } from '../data/school';
+import { photos } from '../data/photos';
 
-interface Props { title?: string; description?: string }
+interface Props { title?: string; description?: string; ogImage?: ImageMetadata }
 const {
-  title = 'Topheight Schools, Asaba | Nursery, Primary & Secondary School',
-  description = 'Topheight Schools in Akwofor, Asaba, Delta State: Topheight Academy (Nursery & Primary) and Topheight College (Secondary). Science laboratory, approved WAEC centre. Humility · Empathy · Prospect.',
+  title,
+  description = 'Topheight Schools in Akwofor, Asaba, Delta State: Topheight Academy (Nursery & Primary) and Topheight College (Secondary). Science laboratory and approved WAEC examination centre.',
+  ogImage = photos.building.img,
 } = Astro.props;
+const fullTitle = title ? `${title} | Topheight Schools, Asaba` : 'Topheight Schools, Asaba | Nursery, Primary & Secondary School';
+const og = await getImage({ src: ogImage, width: 1200, format: 'jpg' });
+const site = Astro.site ?? Astro.url;
+const ogUrl = new URL(og.src, site).href;
+const canonical = new URL(Astro.url.pathname, site).href;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'School',
   name: school.brand,
   alternateName: [school.academy.name, school.college.name],
+  url: new URL('/', site).href,
   foundingDate: String(school.founded),
   slogan: school.motto.join(', '),
   telephone: school.phones,
+  image: ogUrl,
   address: {
     '@type': 'PostalAddress',
     streetAddress: school.address.street,
@@ -37,18 +47,25 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#0b1f4d" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
+    <meta property="og:site_name" content="Topheight Schools" />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en_NG" />
+    <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body class="min-h-screen">
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
     <Header />
     <main id="main"><slot /></main>
     <Footer />
@@ -59,10 +76,20 @@ const jsonLd = {
     </a>
 
     <script>
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-      }, { rootMargin: '0px 0px -10% 0px' });
-      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      const els = document.querySelectorAll<HTMLElement>('.reveal, .stripe-draw');
+      const show = (el: Element) => el.classList.add('is-in');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(show);
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach((el) => {
+          // Anything already on screen at load is revealed straight away (doesn't depend on the observer firing)
+          if (el.getBoundingClientRect().top < window.innerHeight) show(el);
+          else io.observe(el);
+        });
+      }
     </script>
   </body>
 </html>

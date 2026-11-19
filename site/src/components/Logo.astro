@@ -1,16 +1,18 @@
 ---
-// Temporary wordmark until the school's real logo arrives.
+// Temporary mark until the school's real logo arrives: swap the <svg> for an <img> of the logo.
 interface Props { light?: boolean }
 const { light = false } = Astro.props;
 ---
 <a href="/" class="flex items-center gap-3 group" aria-label="Topheight Schools home">
-  <svg viewBox="0 0 64 64" class="size-10 shrink-0 transition-transform duration-500 group-hover:-translate-y-0.5" aria-hidden="true">
-    <rect width="64" height="64" rx="14" fill={light ? '#ffffff' : '#0b1f4d'} />
-    <path d="M14 18h36v8H36v24h-8V26H14z" fill={light ? '#0b1f4d' : '#ffffff'} />
-    <path d="M32 8l6 7H26z" fill="#f2b705" />
+  <svg viewBox="0 0 48 56" class="h-11 w-auto shrink-0" aria-hidden="true">
+    <path d="M24 2 44 9v18c0 13-8.5 22-20 27C12.5 49 4 40 4 27V9z" fill={light ? '#ffffff' : '#0b1f4d'} />
+    <path d="M14 18h20v5h-7.5v19h-5V23H14z" fill={light ? '#0b1f4d' : '#ffffff'} />
   </svg>
   <span class="leading-none">
-    <span class:list={['block font-display text-xl font-semibold tracking-tight', light ? 'text-white' : 'text-navy-900']}>Topheight</span>
-    <span class:list={['block text-[10px] font-semibold uppercase tracking-[0.28em] mt-1', light ? 'text-gold-400' : 'text-sky-500']}>Schools · Asaba</span>
+    <span class:list={['display block text-[1.35rem] uppercase', light ? 'text-white' : 'text-navy-900']}>Topheight</span>
+    <span class="mt-1.5 flex items-center gap-2">
+      <span class="stripe block h-1 w-8 rounded-full"></span>
+      <span class:list={['text-[10px] font-semibold uppercase tracking-[0.25em]', light ? 'text-white/80' : 'text-navy-700']}>Schools</span>
+    </span>
   </span>
 </a>

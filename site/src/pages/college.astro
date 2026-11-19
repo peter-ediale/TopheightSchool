@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { collegeSubjects } from '../data/school';
+import { photos } from '../data/photos';
+
+const seniorTracks = [
+  { name: 'Science', list: collegeSubjects.science, bar: 'bg-house-green' },
+  { name: 'Arts', list: collegeSubjects.arts, bar: 'bg-house-purple' },
+  { name: 'Commercial', list: collegeSubjects.commercial, bar: 'bg-house-red' },
+];
+---
+<Base title="Topheight College (Secondary)" description="Topheight College, Asaba: JSS and SSS education with a science laboratory and an approved WAEC examination centre." ogImage={photos.labGroup.img}>
+  <PageHero title="Topheight College" crumb="College" photo={photos.labGroup}
+    intro="Secondary education from JSS 1 to SS 3: focused teaching, hands-on science and steady preparation for WAEC." />
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24 grid gap-14 lg:grid-cols-2">
+    <div>
+      <SectionHead title="Junior secondary" intro="JSS 1 to JSS 3 build a broad base across the national curriculum, ending with the Basic Education Certificate Examination (BECE)." />
+      <ul class="reveal mt-8 flex flex-wrap gap-2">
+        {collegeSubjects.junior.map((s) => <li class="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-navy-900/10">{s}</li>)}
+      </ul>
+    </div>
+    <div>
+      <SectionHead title="Senior secondary" intro="From SS 1, students choose a track, building toward WAEC (WASSCE) in SS 3. English Language, Mathematics and Civic Education are taken by all." />
+      <div class="reveal mt-8 grid gap-4">
+        {seniorTracks.map((t) => (
+          <div class="rounded-2xl bg-white p-6 ring-1 ring-navy-900/10">
+            <p class="flex items-center gap-3 font-bold text-navy-900"><span class:list={['h-1.5 w-8 rounded-full', t.bar]}></span>{t.name}</p>
+            <p class="mt-2 text-ink/70">{t.list.join(' · ')}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="laboratory" class="scroll-mt-24 bg-navy-950 py-24 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 grid gap-14 lg:grid-cols-2 lg:items-center">
+      <div>
+        <SectionHead title="The laboratory" light intro="A dedicated block where practical lessons happen: titrations and qualitative analysis in chemistry, specimens and microscopes in biology. Students wear lab coats and gloves and learn to work safely." />
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="reveal overflow-hidden rounded-3xl"><Image src={photos.labDemo.img} alt={photos.labDemo.alt} widths={[300, 600]} sizes="(min-width:1024px) 22vw, 50vw" class="aspect-[3/4] w-full object-cover" /></div>
+        <div class="reveal overflow-hidden rounded-3xl" style="--d:120ms"><Image src={photos.labRoom.img} alt={photos.labRoom.alt} widths={[300, 600]} sizes="(min-width:1024px) 22vw, 50vw" class="aspect-[3/4] w-full object-cover" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24 grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+    <div class="reveal overflow-hidden rounded-3xl"><Image src={photos.assembly2.img} alt={photos.assembly2.alt} widths={[400, 720]} sizes="(min-width:1024px) 40vw, 100vw" class="aspect-[4/5] w-full object-cover" /></div>
+    <div>
+      <SectionHead title="Ready for WAEC, ready for life" intro="Students in SS 3 write their WAEC examinations at Topheight's own approved centre: same building, same classrooms, fewer nerves. Beyond exams, house competitions and Career Day help them discover where they are heading." />
+      <a href="/waec-centre" class="reveal mt-8 inline-flex rounded-full bg-navy-900 px-7 py-4 font-semibold text-white hover:bg-navy-700">About our WAEC centre</a>
+    </div>
+  </section>
+
+  <CtaBand title="Join Topheight College" text="Admissions are open into JSS and SSS classes, subject to space. Message us to book a visit." />
+</Base>

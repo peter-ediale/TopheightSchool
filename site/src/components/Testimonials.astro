@@ -1,0 +1,18 @@
+---
+// Renders nothing until real testimonials are added in src/data/school.ts
+import { testimonials } from '../data/school';
+import SectionHead from './SectionHead.astro';
+---
+{testimonials.length > 0 && (
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24">
+    <SectionHead title="What parents say" />
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {testimonials.map((t, i) => (
+        <figure class="reveal rounded-3xl bg-white p-8 border border-navy-900/10" style={`--d:${i * 100}ms`}>
+          <blockquote class="text-lg leading-relaxed text-ink/85">“{t.quote}”</blockquote>
+          <figcaption class="mt-6 text-sm"><span class="font-bold text-navy-900">{t.name}</span><br /><span class="text-ink/60">{t.relation}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+)}

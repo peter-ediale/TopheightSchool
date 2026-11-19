@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Gallery from '../components/react/Gallery';
+import { photos, allPhotos } from '../data/photos';
+import { toGalleryItems } from '../lib/gallery';
+
+const items = await toGalleryItems(allPhotos);
+---
+<Base title="Gallery" description="Photos from Topheight Schools, Asaba: the campus, science laboratory, Career Day and school life.">
+  <PageHero title="Gallery" photo={photos.assembly2} position="center 40%" intro="The campus, the laboratory, Career Day and everyday life at Topheight." />
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20">
+    <Gallery client:idle items={items} />
+  </section>
+</Base>

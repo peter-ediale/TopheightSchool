@@ -8,7 +8,8 @@ export default function Counter({ to, suffix = '', prefix = '', duration = 2 }: 
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-15% 0px' });
   const reduce = useReducedMotion();
-  const [value, setValue] = useState(0);
+  // Starts at the real number so it's correct even if the animation never runs
+  const [value, setValue] = useState(to ?? 0);
 
   useEffect(() => {
     if (!inView || to == null) return;

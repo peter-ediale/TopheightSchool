@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { school, whatsappLink, mapEmbed, mapLink, fullAddress } from '../data/school';
+import { photos } from '../data/photos';
+
+const cards = [
+  { t: 'Call us', lines: school.phonesDisplay.map((p, i) => ({ text: p, href: `tel:${school.phones[i]}` })) },
+  { t: 'WhatsApp', lines: [{ text: 'Chat with the school office', href: whatsappLink() }] },
+  { t: 'Visit', lines: [{ text: 'Get directions on Google Maps', href: mapLink }] },
+];
+---
+<Base title="Contact us" description={`Contact Topheight Schools, Asaba: ${school.phonesDisplay.join(', ')}. ${fullAddress}.`}>
+  <PageHero title="Contact us" crumb="Contact" photo={photos.walkway} intro="We'd love to hear from you. Call, send a WhatsApp message or come and visit during school hours." />
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 grid gap-6 md:grid-cols-3">
+    {cards.map((c, i) => (
+      <div class="reveal rounded-3xl bg-white p-8 ring-1 ring-navy-900/10" style={`--d:${i * 80}ms`}>
+        <h2 class="display text-2xl uppercase text-navy-900">{c.t}</h2>
+        <ul class="mt-4 space-y-2">
+          {c.lines.map((l) => <li><a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener" class="text-lg font-semibold text-sky-600 hover:underline">{l.text}</a></li>)}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 pb-24 grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+    <div class="reveal space-y-8">
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-navy-900">Address</h2>
+        <address class="mt-2 not-italic text-lg leading-relaxed text-ink/80">{fullAddress}</address>
+      </div>
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-navy-900">School hours</h2>
+        <ul class="mt-2 space-y-1 text-lg text-ink/80">{school.hours.map((h) => <li>{h.days}: <span class="font-semibold">{h.time}</span></li>)}</ul>
+      </div>
+      {school.email && <div><h2 class="text-sm font-bold uppercase tracking-wider text-navy-900">Email</h2><a href={`mailto:${school.email}`} class="mt-2 block text-lg text-sky-600">{school.email}</a></div>}
+    </div>
+    <div class="reveal overflow-hidden rounded-3xl ring-1 ring-navy-900/10">
+      <iframe src={mapEmbed} title="Map showing Topheight Schools in Akwofor, Asaba" class="h-[28rem] w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+</Base>

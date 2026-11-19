@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { school, leadership } from '../data/school';
+import { photos } from '../data/photos';
+
+const values = [
+  { word: 'Humility', bar: 'bg-house-purple', text: 'Staying teachable, respecting others and letting good work speak for itself.' },
+  { word: 'Empathy', bar: 'bg-house-green', text: 'Caring for classmates, teachers and the community, and treating people the way we want to be treated.' },
+  { word: 'Prospect', bar: 'bg-house-yellow', text: 'Looking ahead: to the next class, to WAEC, to university and to a purposeful life.' },
+];
+const milestones = [
+  { year: String(school.founded), text: 'Topheight opens its doors in Akwofor, Asaba.' },
+  { year: 'Two schools', text: 'Topheight Academy (Nursery & Primary) and Topheight College (Secondary) share one campus.' },
+  { year: 'Laboratory', text: 'A dedicated science laboratory block for practical lessons.' },
+  { year: 'WAEC centre', text: 'Topheight College is an approved WAEC examination centre.' },
+];
+---
+<Base title="About us" description={`The story of Topheight Schools, Asaba: founded in ${school.founded}, guided by Humility, Empathy and Prospect.`}>
+  <PageHero title="Our story" crumb="About" photo={photos.mural} position="center 30%"
+    intro={`Since ${school.founded}, Topheight has grown from a small beginning in Akwofor into a school that takes children from their first day in nursery to their final WAEC paper.`} />
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24 grid gap-14 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+    <div>
+      <SectionHead title="How Topheight began" />
+      <div class="reveal mt-6 space-y-5 text-lg leading-relaxed text-ink/75">
+        <p>Topheight Schools opened in {school.founded} in Akwofor, Asaba, to give children in this growing part of the city a school that combines good teaching with strong character.</p>
+        <p>The name says what we want for every pupil: to reach the top of their own potential. Our motto, <strong class="text-navy-900">Humility, Empathy and Prospect</strong>, says how we want them to get there.</p>
+        <p>Today Topheight is home to two schools on one campus, Topheight Academy and Topheight College, with a science laboratory block and an approved WAEC examination centre.</p>
+      </div>
+    </div>
+    <ol class="reveal relative border-l-2 border-navy-900/10 pl-8 space-y-10" style="--d:150ms">
+      {milestones.map((m) => (
+        <li class="relative">
+          <span class="absolute -left-[2.6rem] top-1 size-4 rounded-full border-4 border-paper bg-sky-500"></span>
+          <p class="display text-xl uppercase text-navy-900">{m.year}</p>
+          <p class="mt-1 text-ink/70">{m.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="bg-navy-900 py-24 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <SectionHead title="What our motto means" light />
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        {values.map((v, i) => (
+          <div class="reveal rounded-3xl bg-white/5 p-8 ring-1 ring-white/10" style={`--d:${i * 100}ms`}>
+            <span class:list={['block h-1.5 w-14 rounded-full', v.bar]}></span>
+            <h3 class="display mt-6 text-3xl uppercase">{v.word}</h3>
+            <p class="mt-3 leading-relaxed text-white/75">{v.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {leadership.length > 0 && (
+    <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24">
+      <SectionHead title="Our leadership" />
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {leadership.map((p) => (
+          <div class="reveal rounded-3xl bg-white p-8 ring-1 ring-navy-900/10">
+            <p class="display text-2xl uppercase text-navy-900">{p.name}</p>
+            <p class="text-ink/60">{p.role}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24 grid gap-6 md:grid-cols-2">
+    <div class="reveal overflow-hidden rounded-3xl"><Image src={photos.walkway.img} alt={photos.walkway.alt} widths={[480, 720]} sizes="(min-width:768px) 45vw, 100vw" class="aspect-[4/3] w-full object-cover" /></div>
+    <div class="reveal rounded-3xl bg-sky-50 p-8 sm:p-12 flex flex-col justify-center" style="--d:120ms">
+      <h2 class="display text-3xl uppercase text-navy-900">A safe, secure campus</h2>
+      <p class="mt-4 text-lg leading-relaxed text-ink/75">Our compound is walled and gated, visitors are received at the gate, and fire extinguishers are mounted across the buildings.</p>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

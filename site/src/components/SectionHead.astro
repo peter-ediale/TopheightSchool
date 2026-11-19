@@ -1,0 +1,9 @@
+---
+interface Props { title: string; intro?: string; light?: boolean; center?: boolean }
+const { title, intro, light = false, center = false } = Astro.props;
+---
+<div class:list={['reveal max-w-2xl', center && 'mx-auto text-center']}>
+  <h2 class:list={['display text-4xl sm:text-5xl uppercase', light ? 'text-white' : 'text-navy-900']}>{title}</h2>
+  <div class:list={['stripe stripe-draw mt-5 h-1.5 w-24 rounded-full', center && 'mx-auto']} style="--d:200ms"></div>
+  {intro && <p class:list={['mt-5 text-lg leading-relaxed', light ? 'text-white/75' : 'text-ink/70']}>{intro}</p>}
+</div>

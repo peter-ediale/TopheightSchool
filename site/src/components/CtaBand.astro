@@ -1,0 +1,20 @@
+---
+import { school, whatsappLink } from '../data/school';
+interface Props { title?: string; text?: string }
+const {
+  title = 'Come and see Topheight for yourself',
+  text = 'Walk the compound, visit the laboratory and meet the team. Message us to book a visit.',
+} = Astro.props;
+---
+<section class="bg-gold-500">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+    <div class="reveal">
+      <h2 class="display text-4xl sm:text-5xl uppercase text-navy-950">{title}</h2>
+      <p class="mt-4 max-w-xl text-lg text-navy-950/80">{text}</p>
+    </div>
+    <div class="reveal flex flex-wrap gap-3 lg:justify-end" style="--d:120ms">
+      <a href={whatsappLink('Hello Topheight Schools, I would like to book a school visit.')} target="_blank" rel="noopener" class="rounded-full bg-navy-950 px-7 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-navy-800">Book a visit</a>
+      <a href={`tel:${school.phones[0]}`} class="rounded-full border-2 border-navy-950 px-7 py-4 font-semibold text-navy-950 transition hover:bg-navy-950 hover:text-white">Call {school.phonesDisplay[0]}</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import type { Photo } from '../data/photos';
+
+interface Props { title: string; intro?: string; photo: Photo; accent?: 'sky' | 'gold' | 'navy'; crumb?: string; position?: string }
+const { title, intro, photo, accent = 'navy', crumb, position = 'center' } = Astro.props;
+const tint = { sky: 'from-sky-600/95 via-sky-600/75', gold: 'from-navy-950/95 via-navy-950/70', navy: 'from-navy-950/95 via-navy-950/70' }[accent];
+---
+<section class="relative isolate overflow-hidden bg-navy-950">
+  <Image src={photo.img} alt={photo.alt} widths={[720, 1280]} sizes="100vw" loading="eager" fetchpriority="high"
+         class="slowzoom absolute inset-0 -z-10 h-full w-full object-cover" style={`object-position:${position}`} />
+  <div class:list={['absolute inset-0 -z-10 bg-gradient-to-r to-transparent', tint]} aria-hidden="true"></div>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-28 lg:py-32">
+    <nav aria-label="Breadcrumb" class="reveal text-sm text-white/70">
+      <a href="/" class="hover:text-white">Home</a> <span class="mx-1.5">/</span> <span class="text-white">{crumb ?? title}</span>
+    </nav>
+    <h1 class="reveal display mt-5 max-w-3xl text-5xl sm:text-6xl lg:text-7xl uppercase text-white" style="--d:80ms">{title}</h1>
+    <div class="stripe stripe-draw mt-6 h-2 w-40 rounded-full" style="--d:250ms"></div>
+    {intro && <p class="reveal mt-6 max-w-2xl text-lg leading-relaxed text-white/85" style="--d:200ms">{intro}</p>}
+    <slot />
+  </div>
+</section>

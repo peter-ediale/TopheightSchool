@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import AdmissionForm from '../components/react/AdmissionForm';
+import Faq from '../components/react/Faq';
+import { school, admissionSteps, admissionDocs, faqs } from '../data/school';
+import { photos } from '../data/photos';
+
+const faqLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Base title="Admissions" description="How to apply to Topheight Schools, Asaba: enquire, visit, assessment and registration for Nursery, Primary, JSS and SSS.">
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} slot="head" />
+  <PageHero title="Admissions" photo={photos.welcome} position="center 70%"
+    intro="We admit children into Nursery, Primary, JSS and SSS classes throughout the year, subject to space. Here's how it works.">
+    <a href="#enquire" class="reveal mt-8 inline-flex rounded-full bg-gold-500 px-7 py-4 font-semibold text-navy-950 hover:bg-gold-400" style="--d:300ms">Start an enquiry</a>
+  </PageHero>
+
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24">
+    <SectionHead title="Four simple steps" />
+    <ol class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {admissionSteps.map((s, i) => (
+        <li class="reveal relative rounded-3xl bg-white p-8 ring-1 ring-navy-900/10" style={`--d:${i * 100}ms`}>
+          <span class="grid size-11 place-items-center rounded-full bg-navy-900 font-bold text-white">{i + 1}</span>
+          <h3 class="mt-6 text-xl font-bold text-navy-900">{s.title}</h3>
+          <p class="mt-2 leading-relaxed text-ink/70">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="bg-sky-50 py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 grid gap-14 lg:grid-cols-[1fr_1.6fr]">
+      <div>
+        <SectionHead title="What to bring" />
+        <ul class="reveal mt-8 space-y-3">
+          {admissionDocs.map((d) => <li class="flex gap-3"><span class="mt-1 grid size-6 shrink-0 place-items-center rounded-full bg-house-green text-xs text-white">✓</span><span class="text-ink/80">{d}</span></li>)}
+        </ul>
+        <div class="reveal mt-10 rounded-2xl bg-white p-6 ring-1 ring-navy-900/10">
+          <p class="font-bold text-navy-900">Prefer to talk?</p>
+          <p class="mt-1 text-ink/70">Call <a class="font-semibold text-sky-600" href={`tel:${school.phones[0]}`}>{school.phonesDisplay[0]}</a> or <a class="font-semibold text-sky-600" href={`tel:${school.phones[1]}`}>{school.phonesDisplay[1]}</a>, Monday to Friday during school hours.</p>
+        </div>
+      </div>
+      <div id="enquire" class="scroll-mt-28">
+        <h2 class="reveal display mb-6 text-3xl uppercase text-navy-900">Admission enquiry</h2>
+        <div class="reveal"><AdmissionForm client:idle whatsapp={school.whatsapp} /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-24">
+    <SectionHead title="Questions parents ask" center />
+    <div class="reveal mt-12"><Faq client:idle items={faqs} /></div>
+  </section>
+</Base>

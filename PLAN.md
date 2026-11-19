@@ -147,8 +147,8 @@ Most school websites in Asaba are old templates or Facebook pages. We win with:
 ## 10. Roadmap: steps left
 1. **Deploy draft 1** to a free `*.pages.dev` link (you sign in to Cloudflare; ~10 min)
 2. **Collect content** from the school (§7 + §9A). This unlocks everything else
-3. **Design pass 2:** real logo, house-colour identity, remove template tropes, each photo used once
-4. **Build the inner pages** (§9C) with real copy
+3. ✅ **Design pass 2:** house-colour identity, template tropes removed (19 Nov 2026). *Real logo still pending*
+4. ✅ **Inner pages built** (19 Nov 2026): About, Academy, College, Admissions (WhatsApp enquiry form + FAQ), WAEC Centre, Gallery, News, Contact, 404. Copy needs checking: see `CONTENT-REVIEW.md`
 5. **Admissions form + backend**
 6. **News/events + CMS**
 7. **SEO & launch polish** (§9D), test on real phones

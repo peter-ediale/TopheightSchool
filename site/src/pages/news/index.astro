@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { photos } from '../../data/photos';
+
+const posts = (await getCollection('news')).sort((a, b) => +b.data.date - +a.data.date);
+const fmt = (d: Date) => d.toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title="News & events" description="News, events and announcements from Topheight Schools, Asaba.">
+  <PageHero title="News & events" crumb="News" photo={photos.eventDay} intro="Announcements, events and achievements from Topheight Academy and Topheight College." />
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+    {posts.map((p, i) => (
+      <a href={`/news/${p.id}`} class="reveal group block" style={`--d:${(i % 3) * 80}ms`}>
+        <div class="overflow-hidden rounded-2xl"><Image src={p.data.cover} alt="" widths={[400, 640]} sizes="(min-width:768px) 33vw, 100vw" class="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105" /></div>
+        <p class="mt-4 text-sm text-ink/60"><span class="font-semibold text-sky-600">{p.data.tag}</span> · {fmt(p.data.date)}</p>
+        <h2 class="mt-2 text-xl font-bold text-navy-900 group-hover:underline">{p.data.title}</h2>
+        <p class="mt-2 text-ink/70">{p.data.summary}</p>
+      </a>
+    ))}
+  </section>
+</Base>

@@ -1,35 +1,44 @@
 ---
 import Logo from './Logo.astro';
-import { school, whatsappLink, mapLink } from '../data/school';
+import { school, whatsappLink, mapLink, fullAddress, nav } from '../data/school';
 const year = new Date().getFullYear();
 ---
-<footer class="relative bg-navy-950 text-white/70 overflow-hidden">
-  <div class="absolute -top-40 -right-40 size-[28rem] rounded-full bg-sky-500/10 blur-3xl" aria-hidden="true"></div>
-  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-    <div class="lg:col-span-2 max-w-md">
+<footer class="bg-navy-950 text-white/70">
+  <div class="stripe h-1.5 w-full"></div>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div class="max-w-sm">
       <Logo light />
-      <p class="mt-6 leading-relaxed">Nursery, primary and secondary education in Akwofor, Asaba since {school.founded}. Home of <span class="text-white">{school.academy.name}</span> and <span class="text-white">{school.college.name}</span>.</p>
-      <p class="mt-6 font-display text-lg italic text-gold-400">{school.motto.join(' · ')}</p>
+      <p class="mt-6 leading-relaxed">{school.academy.name} (Nursery & Primary) and {school.college.name} (Secondary). Serving families in Asaba since {school.founded}.</p>
+      <p class="display mt-6 text-lg uppercase text-white">{school.motto.join(' · ')}</p>
     </div>
     <div>
-      <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-white">Visit</h3>
-      <address class="mt-4 not-italic leading-relaxed">{school.address.street}, {school.address.area}, {school.address.city} {school.address.postcode}, {school.address.state}</address>
-      <a href={mapLink} target="_blank" rel="noopener" class="mt-3 inline-block text-gold-400 hover:text-gold-500">Get directions →</a>
-    </div>
-    <div>
-      <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-white">Talk to us</h3>
-      <ul class="mt-4 space-y-2">
-        {school.phones.map((p, i) => <li><a href={`tel:${p}`} class="hover:text-white">{school.phonesDisplay[i]}</a></li>)}
-        <li><a href={whatsappLink()} target="_blank" rel="noopener" class="hover:text-white">WhatsApp us</a></li>
+      <h3 class="text-sm font-bold text-white">Explore</h3>
+      <ul class="mt-4 grid gap-2">
+        {nav.map((l) => <li><a href={l.href} class="hover:text-white">{l.label}</a></li>)}
       </ul>
-      <ul class="mt-6 space-y-1 text-sm">
-        {school.hours.map((h) => <li><span class="text-white/90">{h.days}:</span> {h.time}</li>)}
+    </div>
+    <div>
+      <h3 class="text-sm font-bold text-white">Visit</h3>
+      <address class="mt-4 not-italic leading-relaxed">{fullAddress}</address>
+      <a href={mapLink} target="_blank" rel="noopener" class="mt-3 inline-block font-semibold text-gold-400 hover:text-gold-500">Get directions →</a>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold text-white">Contact</h3>
+      <ul class="mt-4 grid gap-2">
+        {school.phones.map((p, i) => <li><a href={`tel:${p}`} class="hover:text-white">{school.phonesDisplay[i]}</a></li>)}
+        <li><a href={whatsappLink()} target="_blank" rel="noopener" class="hover:text-white">WhatsApp</a></li>
+        {school.email && <li><a href={`mailto:${school.email}`} class="hover:text-white">{school.email}</a></li>}
+        {school.social.facebook && <li><a href={school.social.facebook} target="_blank" rel="noopener" class="hover:text-white">Facebook</a></li>}
+        {school.social.instagram && <li><a href={school.social.instagram} target="_blank" rel="noopener" class="hover:text-white">Instagram</a></li>}
+      </ul>
+      <ul class="mt-6 grid gap-1 text-sm">
+        {school.hours.slice(0, 2).map((h) => <li><span class="text-white/90">{h.days}:</span> {h.time}</li>)}
       </ul>
     </div>
   </div>
-  <div class="relative border-t border-white/10">
+  <div class="border-t border-white/10">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 py-6 text-sm flex flex-col sm:flex-row gap-2 justify-between">
-      <p>© {year} {school.brand}. All rights reserved.</p>
+      <p>© {year} {school.brand} · RC {school.rcNumber}</p>
       <p>Approved WAEC examination centre</p>
     </div>
   </div>
