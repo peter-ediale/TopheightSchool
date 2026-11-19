@@ -1,0 +1,236 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import HeroHeadline from '../components/react/HeroHeadline';
+import Counter from '../components/react/Counter';
+import Gallery, { type GalleryItem } from '../components/react/Gallery';
+import { school, whatsappLink, mapEmbed, mapLink } from '../data/school';
+
+import hero from '../assets/photos/12-college-building-balloons-wide.jpg';
+import academyImg from '../assets/photos/08-career-day-doctors.jpg';
+import collegeImg from '../assets/photos/11-lab-students-group.jpg';
+import labGold from '../assets/photos/04-science-lab-bench-golden-light.jpg';
+import labDemo from '../assets/photos/09-lab-teacher-titration-demo.jpg';
+import labRoom from '../assets/photos/03-science-lab-interior-charts.jpg';
+import labBuilding from '../assets/photos/13-laboratory-building-flags.jpg';
+import mural from '../assets/photos/17-science-mural-wide.jpg';
+import assembly from '../assets/photos/02-assembly-house-colours-from-balcony.jpg';
+import assembly2 from '../assets/photos/19-assembly-house-colours-ground.jpg';
+import lawyers from '../assets/photos/07-career-day-lawyers.jpg';
+import eventDay from '../assets/photos/10-event-balloons-alphabet-day.jpg';
+import welcome from '../assets/photos/18-compound-welcome-banner.jpg';
+import walkway from '../assets/photos/15-compound-walkway-a.jpg';
+
+const yearsOfService = new Date().getFullYear() - school.founded;
+
+const galleryRaw = [
+  { img: assembly, caption: 'Morning assembly in house colours', alt: 'Pupils lined up for morning assembly in coloured house sportswear in front of Topheight College' },
+  { img: lawyers, caption: 'Career Day: our future lawyers', alt: 'Young pupils dressed as lawyers in wigs and gowns for Career Day' },
+  { img: mural, caption: 'Our science mural', alt: 'Painted mural of young scientists on a Topheight school building' },
+  { img: eventDay, caption: 'Celebration day on the quad', alt: 'Pupils gathered for a school celebration with balloons' },
+  { img: labDemo, caption: 'Hands-on titration practical', alt: 'Teacher demonstrating a titration to secondary students in lab coats' },
+  { img: academyImg, caption: 'Career Day: our future doctors', alt: 'Pupils in white coats and stethoscopes for Career Day' },
+  { img: welcome, caption: 'Welcome to Topheight', alt: 'Topheight school compound with welcome banner' },
+  { img: assembly2, caption: 'Inter-house spirit', alt: 'Pupils in house colours gathering in the school compound' },
+  { img: labRoom, caption: 'Biology corner of the laboratory', alt: 'School laboratory with anatomy charts and microscope' },
+];
+const gallery: GalleryItem[] = await Promise.all(
+  galleryRaw.map(async ({ img, caption, alt }) => {
+    const thumb = await getImage({ src: img, width: 640, format: 'webp' });
+    const full = await getImage({ src: img, width: 1280, format: 'webp' });
+    return { src: thumb.src, full: full.src, width: thumb.attributes.width as number, height: thumb.attributes.height as number, alt, caption };
+  }),
+);
+
+const pillars = [
+  { word: 'Humility', text: 'We raise children who stay teachable, respect others and let their work speak for them.' },
+  { word: 'Empathy', text: 'Every child is known by name. We teach pupils to care for one another and for their community.' },
+  { word: 'Prospect', text: 'We prepare each learner for what comes next: the next class, WAEC, university and life.' },
+];
+---
+<Base>
+  <!-- HERO -->
+  <section class="relative grain min-h-[100svh] flex items-end overflow-hidden bg-navy-950">
+    <Image src={hero} alt="Topheight College building decorated with balloons" widths={[720, 1280]} sizes="100vw"
+           class="kenburns absolute inset-0 h-full w-full object-cover" loading="eager" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-navy-950/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-navy-950/70 to-transparent" aria-hidden="true"></div>
+
+    <div class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 pb-14 pt-32 sm:pb-20">
+      <p class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white/90 backdrop-blur">
+        <span class="size-1.5 rounded-full bg-gold-400"></span> Akwofor, Asaba · Since {school.founded}
+      </p>
+      <HeroHeadline client:load />
+      <p class="reveal mt-6 max-w-xl text-lg text-white/80 leading-relaxed" style="--d:600ms">
+        Nursery, primary and secondary education built on <span class="text-white font-medium">Humility, Empathy and Prospect</span>, with a real science laboratory and an approved WAEC examination centre.
+      </p>
+      <div class="reveal mt-9 flex flex-wrap gap-3" style="--d:750ms">
+        <a href={whatsappLink('Hello Topheight Schools, I would like to book a school visit.')} target="_blank" rel="noopener"
+           class="rounded-full bg-gold-500 px-7 py-4 font-semibold text-navy-950 shadow-xl shadow-gold-500/25 transition hover:-translate-y-0.5 hover:bg-gold-400">Book a school visit</a>
+        <a href="#schools" class="rounded-full border border-white/30 px-7 py-4 font-semibold text-white backdrop-blur transition hover:bg-white/10">Explore our schools</a>
+      </div>
+
+      <dl class="reveal mt-14 grid max-w-3xl grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/15 backdrop-blur-md" style="--d:900ms">
+        <div class="bg-navy-950/40 p-4 sm:p-6"><dt class="text-xs sm:text-sm text-white/60">Years of excellence</dt><dd class="mt-1 font-display text-3xl sm:text-4xl text-white"><Counter client:visible to={yearsOfService} suffix="+" /></dd></div>
+        <div class="bg-navy-950/40 p-4 sm:p-6"><dt class="text-xs sm:text-sm text-white/60">Levels under one roof</dt><dd class="mt-1 font-display text-3xl sm:text-4xl text-white"><Counter client:visible to={3} /></dd></div>
+        <div class="bg-navy-950/40 p-4 sm:p-6"><dt class="text-xs sm:text-sm text-white/60">WAEC centre</dt><dd class="mt-2 sm:mt-1 font-display text-xl sm:text-4xl text-gold-400">Approved</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- MOTTO MARQUEE -->
+  <div class="overflow-hidden bg-gold-500 py-4 text-navy-950" aria-hidden="true">
+    <div class="marquee flex w-max gap-10 whitespace-nowrap font-display text-2xl italic">
+      {Array.from({ length: 2 }).map(() => (
+        <div class="flex gap-10">
+          {Array.from({ length: 4 }).map(() => school.motto.map((m) => <span class="flex items-center gap-10">{m}<span class="text-navy-900/40">✦</span></span>))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24 sm:py-32">
+    <div class="grid gap-14 lg:grid-cols-[1fr_1.4fr] lg:gap-20 items-start">
+      <div class="reveal lg:sticky lg:top-32">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">Our motto</p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl leading-tight text-navy-900">Three words that shape every Topheight child.</h2>
+        <p class="mt-6 text-lg text-ink/70 leading-relaxed">Since {school.founded}, families in Asaba have trusted us to grow children who are confident in class and grounded in character.</p>
+      </div>
+      <ol class="space-y-5">
+        {pillars.map((p, i) => (
+          <li class="reveal group relative overflow-hidden rounded-3xl border border-navy-900/10 bg-white p-8 sm:p-10 transition duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-navy-900/10" style={`--d:${i * 120}ms`}>
+            <span class="absolute right-6 top-4 font-display text-8xl text-navy-900/5 transition group-hover:text-gold-500/20">0{i + 1}</span>
+            <h3 class="font-display text-3xl text-navy-900">{p.word}</h3>
+            <p class="mt-3 max-w-md text-ink/70 leading-relaxed">{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- OUR SCHOOLS -->
+  <section id="schools" class="scroll-mt-20 bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="reveal max-w-2xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">One family, two schools</p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl leading-tight text-navy-900">From first steps to final exams.</h2>
+      </div>
+      <div class="mt-14 grid gap-6 md:grid-cols-2">
+        <article class="reveal group relative min-h-[34rem] overflow-hidden rounded-[2rem] bg-sky-500">
+          <Image src={academyImg} alt="Young Topheight Academy pupils dressed as doctors for Career Day" widths={[480, 800]} sizes="(min-width: 768px) 50vw, 100vw"
+                 class="absolute inset-0 h-full w-full object-cover transition duration-[1.2s] group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-sky-500 via-sky-500/40 to-transparent"></div>
+          <div class="relative flex h-full min-h-[34rem] flex-col justify-end p-8 sm:p-10 text-white">
+            <span class="w-max rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-sky-500">Nursery & Primary</span>
+            <h3 class="mt-4 font-display text-4xl sm:text-5xl">{school.academy.name}</h3>
+            <p class="mt-3 max-w-md text-white/90 leading-relaxed">A warm, colourful start where curiosity is encouraged, reading and numeracy are built early, and every child feels safe to try.</p>
+          </div>
+        </article>
+        <article class="reveal group relative min-h-[34rem] overflow-hidden rounded-[2rem] bg-navy-900" style="--d:120ms">
+          <Image src={collegeImg} alt="Topheight College students in lab coats during a chemistry practical" widths={[480, 800, 1280]} sizes="(min-width: 768px) 50vw, 100vw"
+                 class="absolute inset-0 h-full w-full object-cover transition duration-[1.2s] group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/50 to-transparent"></div>
+          <div class="relative flex h-full min-h-[34rem] flex-col justify-end p-8 sm:p-10 text-white">
+            <span class="w-max rounded-full bg-gold-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-navy-950">Secondary · JSS & SSS</span>
+            <h3 class="mt-4 font-display text-4xl sm:text-5xl">{school.college.name}</h3>
+            <p class="mt-3 max-w-md text-white/90 leading-relaxed">Focused teaching, hands-on science and steady preparation for WAEC, so students leave ready for university and beyond.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCIENCE -->
+  <section id="science" class="scroll-mt-20 relative overflow-hidden bg-navy-950 py-24 sm:py-32 text-white">
+    <div class="absolute -left-40 top-20 size-[32rem] rounded-full bg-sky-500/20 blur-3xl" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 grid gap-16 lg:grid-cols-2 items-center">
+      <div>
+        <p class="reveal text-sm font-semibold uppercase tracking-[0.2em] text-gold-400">Learning by doing</p>
+        <h2 class="reveal mt-4 font-display text-4xl sm:text-5xl leading-tight">A real laboratory,<br /><em class="text-gold-400">not a textbook picture.</em></h2>
+        <p class="reveal mt-6 text-lg text-white/75 leading-relaxed">Our dedicated science laboratory lets students run practicals in chemistry, biology and physics, not just read about them. It's where theory becomes understanding, and where WAEC practicals stop being scary.</p>
+        <ul class="reveal mt-8 grid gap-3 sm:grid-cols-2">
+          {['Chemistry practicals & titration', 'Biology specimens & microscopes', 'Physics apparatus', 'Lab coats & safety first'].map((t) => (
+            <li class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-gold-500 text-xs text-navy-950">✓</span>{t}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="relative grid grid-cols-2 gap-4">
+        <div class="reveal row-span-2 overflow-hidden rounded-3xl">
+          <Image src={labGold} alt="Laboratory bench with glassware in golden morning light" widths={[360, 720]} sizes="(min-width: 1024px) 25vw, 50vw" class="h-full w-full object-cover" />
+        </div>
+        <div class="reveal overflow-hidden rounded-3xl" style="--d:150ms">
+          <Image src={labDemo} alt="Teacher demonstrating titration to students" widths={[360, 600]} sizes="(min-width: 1024px) 25vw, 50vw" class="aspect-[4/5] w-full object-cover" />
+        </div>
+        <div class="reveal overflow-hidden rounded-3xl" style="--d:300ms">
+          <Image src={labRoom} alt="Laboratory interior with anatomy charts" widths={[360, 720]} sizes="(min-width: 1024px) 25vw, 50vw" class="aspect-[4/5] w-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAEC -->
+  <section id="waec" class="scroll-mt-20 relative overflow-hidden bg-gold-500 py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 grid gap-12 lg:grid-cols-[1.2fr_1fr] items-center">
+      <div>
+        <p class="reveal text-sm font-semibold uppercase tracking-[0.2em] text-navy-800">Approved examination centre</p>
+        <h2 class="reveal mt-4 font-display text-4xl sm:text-6xl leading-[1.05] text-navy-950">We don't just prepare for WAEC. <em>We host it.</em></h2>
+        <p class="reveal mt-6 max-w-xl text-lg text-navy-950/80 leading-relaxed">Topheight College is an approved WAEC centre. Our students sit their exams in familiar classrooms, and candidates from other schools are welcome to register and write with us.</p>
+        <div class="reveal mt-8 flex flex-wrap gap-3">
+          <a href={whatsappLink('Hello Topheight, I would like information on registering candidates for WAEC at your centre.')} target="_blank" rel="noopener"
+             class="rounded-full bg-navy-950 px-7 py-4 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-navy-800">Register candidates with us</a>
+        </div>
+        <dl class="reveal mt-12 grid grid-cols-2 gap-6 max-w-md">
+          <div><dt class="text-sm text-navy-950/70">Candidates{school.waec.year ? ` (${school.waec.year})` : ''}</dt><dd class="font-display text-5xl text-navy-950"><Counter client:visible to={school.waec.candidates} /></dd></div>
+          <div><dt class="text-sm text-navy-950/70">5 credits incl. English & Maths</dt><dd class="font-display text-5xl text-navy-950"><Counter client:visible to={school.waec.fiveCreditsPct} suffix="%" /></dd></div>
+        </dl>
+      </div>
+      <div class="reveal relative">
+        <div class="absolute -inset-4 rotate-3 rounded-[2rem] bg-navy-950/10" aria-hidden="true"></div>
+        <Image src={labBuilding} alt="Topheight College laboratory building with flags" widths={[400, 720]} sizes="(min-width: 1024px) 40vw, 100vw" class="relative aspect-[4/5] w-full rounded-[2rem] object-cover shadow-2xl" />
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT LIFE -->
+  <section id="life" class="scroll-mt-20 mx-auto max-w-7xl px-4 sm:px-6 py-24 sm:py-32">
+    <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-12">
+      <div class="max-w-2xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">Life at Topheight</p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl leading-tight text-navy-900">Career days, house colours and a lot of joy.</h2>
+      </div>
+      <p class="max-w-sm text-ink/70">Tap any photo to view it full size.</p>
+    </div>
+    <Gallery client:visible items={gallery} />
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit" class="scroll-mt-20 relative overflow-hidden bg-navy-900 text-white">
+    <Image src={walkway} alt="" widths={[720]} class="absolute inset-0 h-full w-full object-cover opacity-15" />
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 py-24 sm:py-32 grid gap-12 lg:grid-cols-2 items-center">
+      <div>
+        <p class="reveal text-sm font-semibold uppercase tracking-[0.2em] text-gold-400">Admissions open</p>
+        <h2 class="reveal mt-4 font-display text-4xl sm:text-6xl leading-[1.05]">Come and see Topheight for yourself.</h2>
+        <p class="reveal mt-6 max-w-lg text-lg text-white/75 leading-relaxed">Walk the compound, visit the laboratory and meet our teachers. Send us a message to book a visit at a time that suits you.</p>
+        <div class="reveal mt-8 flex flex-wrap gap-3">
+          <a href={whatsappLink('Hello Topheight Schools, I would like to book a school visit.')} target="_blank" rel="noopener" class="rounded-full bg-gold-500 px-7 py-4 font-semibold text-navy-950 transition hover:-translate-y-0.5 hover:bg-gold-400">Book a visit on WhatsApp</a>
+          <a href={`tel:${school.phones[0]}`} class="rounded-full border border-white/30 px-7 py-4 font-semibold transition hover:bg-white/10">Call {school.phonesDisplay[0]}</a>
+        </div>
+        <div class="reveal mt-10 grid gap-6 sm:grid-cols-2 text-white/80">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-white">Address</h3>
+            <p class="mt-2 leading-relaxed">{school.address.street}, {school.address.area}, {school.address.city}</p>
+            <a href={mapLink} target="_blank" rel="noopener" class="mt-2 inline-block text-gold-400 hover:text-gold-500">Get directions →</a>
+          </div>
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-white">School hours</h3>
+            <ul class="mt-2 space-y-1">{school.hours.slice(0, 2).map((h) => <li>{h.days}: {h.time}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+      <div class="reveal overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl">
+        <iframe src={mapEmbed} title="Map showing Topheight Schools in Akwofor, Asaba" class="h-[26rem] w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+</Base>

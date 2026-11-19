@@ -1,0 +1,11 @@
+# Raw/unedited school photos stay local only (children's images, excluded shots).
+# Photos used on the site are optimised copies in site/src/assets/photos.
+/photos/
+
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+.DS_Store
+.wrangler/
