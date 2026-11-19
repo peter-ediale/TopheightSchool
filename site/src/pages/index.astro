@@ -5,10 +5,11 @@ import Base from '../layouts/Base.astro';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Testimonials from '../components/Testimonials.astro';
-import HeroHeadline from '../components/react/HeroHeadline';
+import HeroHeadline from '../components/HeroHeadline.astro';
 import Counter from '../components/react/Counter';
 import { school, houses, leadership } from '../data/school';
 import { photos } from '../data/photos';
+import logo from '../assets/brand/logo.png';
 
 const news = (await getCollection('news')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
 const fmt = (d: Date) => d.toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -16,7 +17,7 @@ const hasWaec = school.waec.candidates != null && school.waec.fiveCreditsPct != 
 const head = leadership[0];
 
 const facts = [
-  { k: `Since ${school.founded}`, v: 'Serving families in Asaba' },
+  { k: `${school.waec.fiveCreditsPct}%`, v: `English & Maths credits, WASSCE ${school.waec.year}` },
   { k: 'Nursery → SS 3', v: 'One school for every stage' },
   { k: 'Science lab', v: 'Practicals, not just theory' },
   { k: 'WAEC centre', v: 'Approved examination venue' },
@@ -31,9 +32,9 @@ const facts = [
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/80 to-transparent sm:hidden" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-28 lg:py-36">
       <p class="reveal mb-8 text-sm font-semibold text-gold-400">Topheight Academy · Topheight College · Asaba</p>
-      <HeroHeadline client:load />
+      <HeroHeadline />
       <p class="reveal mt-8 max-w-xl text-lg leading-relaxed text-white/85" style="--d:700ms">
-        Nursery, primary and secondary education in Akwofor, Asaba. A strong start, a real science laboratory and an approved WAEC centre, all on one campus.
+        From first words in nursery to final papers in SS 3, Topheight raises children who learn well, think for themselves and treat people right.
       </p>
       <div class="reveal mt-10 flex flex-wrap gap-3" style="--d:850ms">
         <a href="/admissions" class="rounded-full bg-gold-500 px-7 py-4 font-semibold text-navy-950 transition hover:-translate-y-0.5 hover:bg-gold-400">Admissions</a>
@@ -47,7 +48,7 @@ const facts = [
     <dl class="mx-auto grid max-w-7xl grid-cols-2 lg:grid-cols-4 px-4 sm:px-6">
       {facts.map((f, i) => (
         <div class="reveal border-navy-900/10 py-8 sm:py-10 px-2 sm:px-6 [&:nth-child(odd)]:border-r lg:border-r lg:last:border-r-0 [&:nth-child(-n+2)]:border-b lg:[&:nth-child(-n+2)]:border-b-0" style={`--d:${i * 80}ms`}>
-          <dt class="display text-2xl sm:text-3xl uppercase text-navy-900">{f.k}</dt>
+          <dt class="display text-xl sm:text-3xl uppercase text-navy-900">{f.k}</dt>
           <dd class="mt-2 text-sm text-ink/65">{f.v}</dd>
         </div>
       ))}
@@ -58,9 +59,8 @@ const facts = [
   <section class="mx-auto max-w-7xl px-4 sm:px-6 py-24 sm:py-32 grid gap-14 lg:grid-cols-2 lg:items-center">
     <div class="reveal relative">
       <Image src={photos.welcome.img} alt={photos.welcome.alt} widths={[480, 720]} sizes="(min-width:1024px) 45vw, 100vw" class="aspect-[4/5] w-full rounded-3xl object-cover" />
-      <div class="absolute -bottom-5 -right-3 sm:-right-5 rounded-2xl bg-navy-900 px-6 py-5 text-white shadow-2xl">
-        <p class="display text-4xl"><Counter client:visible to={new Date().getFullYear() - school.founded} />+</p>
-        <p class="text-sm text-white/75">years in Asaba</p>
+      <div class="absolute -bottom-6 -right-3 sm:-right-6 grid size-32 sm:size-36 place-items-center rounded-full bg-white shadow-2xl ring-8 ring-paper">
+        <Image src={logo} alt="Topheight crest" widths={[160, 240]} sizes="120px" class="h-24 sm:h-28 w-auto" />
       </div>
     </div>
     <div>
@@ -68,8 +68,8 @@ const facts = [
       <div class="reveal mt-6 space-y-5 text-lg leading-relaxed text-ink/75">
         {head?.message ? <p>{head.message}</p> : (
           <>
-            <p>Topheight began in {school.founded} in Akwofor, Asaba, with a simple aim: give every child a solid education and the character to use it well.</p>
-            <p>Today we are two schools on one campus. <strong class="text-navy-900">Topheight Academy</strong> takes children through nursery and primary. <strong class="text-navy-900">Topheight College</strong> carries them through JSS and SSS to their WAEC examinations, which they write right here in our own approved centre.</p>
+            <p>Every child who walks through our gate is on a climb. Some are taking their very first steps in nursery; others are a few papers away from WAEC. Our job is the same for both: know them by name, stretch them, and keep them steady.</p>
+            <p><strong class="text-navy-900">Topheight Academy</strong> lays the foundation in nursery and primary. <strong class="text-navy-900">Topheight College</strong> builds on it through JSS and SSS, all the way to WAEC, written right here in our own approved centre. In {school.waec.year}, every one of our {school.waec.candidates} candidates earned a credit in both English and Mathematics.</p>
           </>
         )}
       </div>
@@ -135,10 +135,14 @@ const facts = [
         <p class="reveal mb-5 inline-block rounded-full bg-gold-500 px-4 py-1.5 text-sm font-bold text-navy-950">Approved WAEC centre</p>
         <SectionHead title="We prepare for WAEC, and we host it" light intro="Our SS 3 students write their exams in classrooms they know. Schools that need a centre for their own candidates are welcome to register with us." />
         {hasWaec && (
-          <dl class="reveal mt-10 grid grid-cols-2 gap-6 max-w-md">
-            <div><dt class="text-sm text-white/60">Candidates ({school.waec.year})</dt><dd class="display text-5xl text-gold-400"><Counter client:visible to={school.waec.candidates} /></dd></div>
-            <div><dt class="text-sm text-white/60">5 credits incl. English & Maths</dt><dd class="display text-5xl text-gold-400"><Counter client:visible to={school.waec.fiveCreditsPct} suffix="%" /></dd></div>
-          </dl>
+          <div class="reveal mt-10">
+            <p class="text-sm font-bold uppercase tracking-wider text-white/60">WASSCE {school.waec.year} results</p>
+            <dl class="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-2xl bg-white/15">
+              <div class="flex flex-col-reverse bg-navy-900 p-4 sm:p-5"><dt class="mt-1 text-xs sm:text-sm text-white/70">candidates</dt><dd class="display text-3xl sm:text-5xl text-gold-400"><Counter client:visible to={school.waec.candidates} /></dd></div>
+              <div class="flex flex-col-reverse bg-navy-900 p-4 sm:p-5"><dt class="mt-1 text-xs sm:text-sm text-white/70">credited in English &amp; Maths</dt><dd class="display text-3xl sm:text-5xl text-gold-400"><Counter client:visible to={school.waec.fiveCreditsPct} suffix="%" /></dd></div>
+              {school.waec.a1Count != null && <div class="flex flex-col-reverse bg-navy-900 p-4 sm:p-5"><dt class="mt-1 text-xs sm:text-sm text-white/70">A1 distinctions</dt><dd class="display text-3xl sm:text-5xl text-gold-400"><Counter client:visible to={school.waec.a1Count} suffix="+" /></dd></div>}
+            </dl>
+          </div>
         )}
         <a href="/waec-centre" class="reveal mt-10 inline-flex rounded-full bg-gold-500 px-7 py-4 font-semibold text-navy-950 transition hover:-translate-y-0.5 hover:bg-gold-400">WAEC centre information</a>
       </div>

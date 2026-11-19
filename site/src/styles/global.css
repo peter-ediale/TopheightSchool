@@ -6,11 +6,13 @@
   --font-display: "Archivo Variable", "Arial Narrow", system-ui, sans-serif;
   --font-sans: "Plus Jakarta Sans Variable", system-ui, sans-serif;
 
-  /* Umbrella brand: deep navy shared by Academy and College */
-  --color-navy-950: #071433;
-  --color-navy-900: #0b1f4d;
-  --color-navy-800: #12306e;
-  --color-navy-700: #1a3f8f;
+  /* Umbrella brand: deep indigo-navy, tuned to the crest's ribbon blue (#4f3e8d) */
+  --color-navy-950: #0e1138;
+  --color-navy-900: #1a1d5c;
+  --color-navy-800: #262a7c;
+  --color-navy-700: #3f3f96;
+  /* Crest red, from the shield */
+  --color-crest: #e8343a;
   /* Academy: blue & white */
   --color-sky-600: #2259c9;
   --color-sky-500: #2f6fe4;

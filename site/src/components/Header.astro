@@ -8,7 +8,7 @@ const desktop = nav.filter((l) => l.href !== '/news');
 ---
 <div class="hidden md:block bg-navy-950 text-white/75 text-xs">
   <div class="mx-auto flex h-9 max-w-7xl items-center justify-between px-4 sm:px-6">
-    <p>{school.address.area}, {school.address.city} · Since {school.founded}</p>
+    <p><span class="mr-2 rounded bg-crest px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">WASSCE {school.waec.year}</span>Every Topheight candidate credited in English &amp; Maths</p>
     <div class="flex items-center gap-5">
       <a href={`tel:${school.phones[0]}`} class="hover:text-white">{school.phonesDisplay[0]}</a>
       <a href={`tel:${school.phones[1]}`} class="hover:text-white">{school.phonesDisplay[1]}</a>

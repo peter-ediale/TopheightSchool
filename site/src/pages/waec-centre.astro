@@ -24,10 +24,15 @@ const why = [
 
   {hasWaec && (
     <section class="bg-gold-500">
-      <dl class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 py-14 sm:grid-cols-2">
-        <div><dt class="font-semibold text-navy-950/70">Our candidates ({school.waec.year})</dt><dd class="display text-6xl text-navy-950"><Counter client:visible to={school.waec.candidates} /></dd></div>
-        <div><dt class="font-semibold text-navy-950/70">5 credits incl. English & Maths</dt><dd class="display text-6xl text-navy-950"><Counter client:visible to={school.waec.fiveCreditsPct} suffix="%" /></dd></div>
-      </dl>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 py-14">
+        <h2 class="display text-2xl uppercase text-navy-950">Our WASSCE {school.waec.year} results</h2>
+        <dl class="mt-6 grid gap-8 sm:grid-cols-3">
+          <div><dt class="font-semibold text-navy-950/70">Candidates</dt><dd class="display text-6xl text-navy-950"><Counter client:visible to={school.waec.candidates} /></dd></div>
+          <div><dt class="font-semibold text-navy-950/70">Credited in English &amp; Maths, with 5+ credits</dt><dd class="display text-6xl text-navy-950"><Counter client:visible to={school.waec.fiveCreditsPct} suffix="%" /></dd></div>
+          {school.waec.a1Count != null && <div><dt class="font-semibold text-navy-950/70">A1 distinctions</dt><dd class="display text-6xl text-navy-950"><Counter client:visible to={school.waec.a1Count} suffix="+" /></dd></div>}
+        </dl>
+        <a href="/news/wassce-2026-results" class="mt-8 inline-block font-semibold text-navy-950 underline">Read about the results →</a>
+      </div>
     </section>
   )}
 

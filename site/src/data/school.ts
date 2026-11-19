@@ -28,8 +28,13 @@ export const school = {
     { days: 'Saturday & Sunday', time: 'Closed' },
   ],
   mapQuery: 'Topheight Academy, Elder Thaddeus Ediale Street, Akwofor, Asaba',
-  // WAEC figures: null hides the numbers until the principal supplies them
-  waec: { year: null as number | null, candidates: null as number | null, fiveCreditsPct: null as number | null },
+  // WASSCE results, read from the school's 2026 results banner. Set a value to null to hide it.
+  waec: {
+    year: 2026 as number | null,
+    candidates: 22 as number | null,
+    fiveCreditsPct: 100 as number | null, // credits (A1–C6) in English & Maths plus 5+ credits overall
+    a1Count: 50 as number | null,         // shown as "50+" (actual count read ≈ 59; confirm with principal)
+  },
 };
 
 export const houses = [

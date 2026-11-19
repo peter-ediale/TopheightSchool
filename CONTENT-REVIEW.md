@@ -21,8 +21,13 @@ The site's wording was drafted by Claude from the photos and what we know. Anyth
 - [ ] Academy focus areas: reading & phonics, numeracy, science, creative arts (music/drama?), ICT
 
 ## Waiting for (sections stay hidden until filled in)
-- [ ] **Logo** file
-- [ ] **WAEC results**: year, number of candidates, % with 5 credits incl. English & Maths
+- [x] **Logo**: red crest is the main logo (cut out from the image sent)
+- [x] **WAEC results** added, read from the 2026 results banner. **Please confirm with the principal:**
+  - 22 candidates, WASSCE (school) 2026
+  - All 22 have a credit (A1–C6) in English Language **and** General Mathematics, and 5+ credits overall
+  - "50+ A1 distinctions" (Claude counted ≈ 59 A1s; the banner photo is blurry)
+  - Students' names and photos are **not** published on the site (privacy); only the class totals
+- [ ] A clean/high-resolution logo file (from the designer) would look sharper than the cut-out
 - [ ] **Leadership**: proprietor/principal names, roles, photo, and a short welcome message (replaces the generic welcome on the home page)
 - [ ] **Testimonials**: 3 short quotes from parents (first name + "Parent, Primary 4")
 - [ ] Ministry of Education approval number, WAEC centre number
