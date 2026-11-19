@@ -108,3 +108,49 @@ Most school websites in Asaba are old templates or Facebook pages. We win with:
 ## 8. Do right now (free, 10 minutes)
 - Check who owns the Google Business Profile, and make sure it's someone at the school. If no one does, use "Claim this business" on Google Maps.
 - Ask a few happy parents to leave Google reviews. Reviews are a major ranking factor.
+
+## 9. Gap audit of draft 1 (why it still feels "AI-made")
+
+**Status:** code on GitHub (`peter-ediale/TopheightSchool`). Homepage only. Not deployed yet.
+
+### A. Content: the biggest gap (needs the school)
+| Gap | Why it feels fake | Fix |
+|---|---|---|
+| All wording is written by Claude | Generic slogans; no real voice, names or stories | Principal's welcome (name + photo), the true founding story, real quotes |
+| No real people | Real school sites show their proprietor, principal and teachers | Staff photos and names (at least the leadership) |
+| Empty WAEC numbers ("—") | Looks unfinished | Real figures from the principal |
+| No testimonials | No outside proof | 3 parent/alumni quotes (first name + class is enough) |
+| No logo | The "T" mark is a placeholder | Real logo file |
+| No local detail | Could be any school anywhere | Landmarks/directions, JSS1–SS3 class names, term dates, uniform, school bus, etc. |
+| No trust credentials | Parents look for approval | Ministry of Education approval no., WAEC centre no., RC DE31706 |
+
+### B. Design: AI-template patterns to replace with a Topheight identity
+- Gold italic accent word in headlines, the scrolling marquee, giant faded "01/02/03" numbers, glassy stat strip, gradient "blobs", an uppercase label above every section. These are now common template tropes.
+- **Replace with things only Topheight has:** the **five house colours** (purple, green, yellow, red, blue, seen in the assembly photos) as a design motif; the **science mural** style as illustrations; the real logo/crest; photos of real people over buildings.
+- The same photos repeat (lab and Career Day appear twice). Each photo should appear once.
+- Phone photos under overcast skies → one good photo walk fixes most of this (see §7).
+
+### C. Missing pages & features (a real school site has depth)
+- About (story, leadership, vision/mission) · Academy page · College page (subjects, JSS/SSS) · Admissions (steps, requirements, FAQ, enquiry form) · WAEC Centre page · Gallery · News & Events · Contact
+- Working admission enquiry form (Pages Function → Google Sheet + email)
+- Term calendar / key dates; downloadable prospectus (PDF)
+- Social media links, school email, 404 page
+
+### D. Technical / launch
+- Deploy on Cloudflare Pages (needs your Cloudflare sign-in)
+- Share image for WhatsApp/Facebook link previews, sitemap, robots.txt, Google Search Console
+- Rename the Google Business Profile to "Topheight Schools" and add the website link
+- Accessibility & speed pass on a real low-end Android
+- Free CMS (Keystatic) so the school can post news itself
+- Custom domain (optional, the only paid item)
+
+## 10. Roadmap: steps left
+1. **Deploy draft 1** to a free `*.pages.dev` link (you sign in to Cloudflare; ~10 min)
+2. **Collect content** from the school (§7 + §9A). This unlocks everything else
+3. **Design pass 2:** real logo, house-colour identity, remove template tropes, each photo used once
+4. **Build the inner pages** (§9C) with real copy
+5. **Admissions form + backend**
+6. **News/events + CMS**
+7. **SEO & launch polish** (§9D), test on real phones
+8. **Go live & get found:** Google profile link, Search Console, directories, reviews
+9. *(Later)* custom domain, photo shoot refresh, alumni page
