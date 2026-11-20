@@ -3,15 +3,17 @@ import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { school, whatsappLink } from '../data/school';
+import { school, whatsappLink, mapLink } from '../data/school';
 import { photos } from '../data/photos';
+import logo from '../assets/brand/logo.png';
 
 interface Props { title?: string; description?: string; ogImage?: ImageMetadata }
 const {
   title,
-  description = 'Topheight Schools in Akwofor, Asaba, Delta State: Topheight Academy (Nursery & Primary) and Topheight College (Secondary). Science laboratory and approved WAEC examination centre.',
+  description = 'Nursery, primary and secondary school in Asaba, Delta State. Science laboratory, approved WAEC centre, and 100% English & Maths credits in WASSCE 2026.',
   ogImage = photos.building.img,
 } = Astro.props;
+const logoImg = await getImage({ src: logo, width: 512, format: 'png' });
 const fullTitle = title ? `${title} | Topheight Schools, Asaba` : 'Topheight Schools, Asaba | Nursery, Primary & Secondary School';
 const og = await getImage({ src: ogImage, width: 1200, format: 'jpg' });
 const site = Astro.site ?? Astro.url;
@@ -27,7 +29,13 @@ const jsonLd = {
   foundingDate: String(school.founded),
   slogan: school.motto.join(', '),
   telephone: school.phones,
+  ...(school.email ? { email: school.email } : {}),
   image: ogUrl,
+  logo: new URL(logoImg.src, site).href,
+  hasMap: mapLink,
+  areaServed: { '@type': 'City', name: 'Asaba' },
+  ...(school.social.facebook || school.social.instagram
+    ? { sameAs: [school.social.facebook, school.social.instagram].filter(Boolean) } : {}),
   address: {
     '@type': 'PostalAddress',
     streetAddress: school.address.street,
@@ -51,6 +59,7 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {school.googleVerification && <meta name="google-site-verification" content={school.googleVerification} />}
     <meta name="theme-color" content="#0b1f4d" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

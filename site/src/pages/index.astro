@@ -185,7 +185,7 @@ const facts = [
         {news.map((n, i) => (
           <a href={`/news/${n.id}`} class="reveal group block" style={`--d:${i * 100}ms`}>
             <div class="overflow-hidden rounded-2xl">
-              <Image src={n.data.cover} alt="" widths={[400, 640]} sizes="(min-width:768px) 30vw, 100vw" class="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105" />
+              <Image src={n.data.cover} alt={n.data.title} widths={[400, 640]} sizes="(min-width:768px) 30vw, 100vw" class="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105" />
             </div>
             <p class="mt-4 text-sm text-ink/60"><span class="font-semibold text-sky-600">{n.data.tag}</span> · {fmt(n.data.date)}</p>
             <h3 class="mt-2 text-xl font-bold text-navy-900 group-hover:underline">{n.data.title}</h3>

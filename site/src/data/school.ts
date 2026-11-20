@@ -22,6 +22,8 @@ export const school = {
   whatsapp: '2348032969491', // TODO confirm which number is on WhatsApp
   email: '', // TODO school email address
   social: { facebook: '', instagram: '' }, // TODO
+  // Google Search Console "HTML tag" code: paste only the content="..." value here
+  googleVerification: '',
   hours: [
     { days: 'Monday – Thursday', time: '7:45am – 3:00pm' },
     { days: 'Friday', time: '7:45am – 1:00pm' },
